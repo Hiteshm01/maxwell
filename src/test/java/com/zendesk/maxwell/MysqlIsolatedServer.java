@@ -90,11 +90,12 @@ public class MysqlIsolatedServer {
 		resetConnection();
 		this.connection.createStatement().executeUpdate("GRANT REPLICATION SLAVE on *.* to 'maxwell'@'127.0.0.1' IDENTIFIED BY 'maxwell'");
 		this.connection.createStatement().executeUpdate("GRANT ALL on *.* to 'maxwell'@'127.0.0.1'");
+		this.connection.createStatement().executeUpdate("CREATE DATABASE if not exists test");
 		LOGGER.info("booted at port " + this.port + ", outputting to file " + outputFile);
 	}
 
 	public void setupSlave(int masterPort) throws SQLException {
-		Connection master = DriverManager.getConnection("jdbc:mysql://127.0.0.1:" + masterPort + "/mysql", "root", "");
+		Connection master = DriverManager.getConnection("jdbc:mysql://127.0.0.1:" + masterPort + "/mysql?useSSL=false", "root", "");
 		ResultSet rs = master.createStatement().executeQuery("show master status");
 		if ( !rs.next() )
 			throw new RuntimeException("could not get master status");
@@ -120,7 +121,7 @@ public class MysqlIsolatedServer {
 	}
 
 	public Connection getNewConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:mysql://127.0.0.1:" + port + "/mysql?zeroDateTimeBehavior=convertToNull", "root", "");
+		return DriverManager.getConnection("jdbc:mysql://127.0.0.1:" + port + "/mysql?zeroDateTimeBehavior=convertToNull&useSSL=false", "root", "");
 	}
 
 	public Connection getConnection() {

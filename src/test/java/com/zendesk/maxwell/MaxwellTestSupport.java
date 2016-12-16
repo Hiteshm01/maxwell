@@ -91,11 +91,13 @@ public class MaxwellTestSupport {
 		config.replicationMysql.port = port;
 		config.replicationMysql.user = "maxwell";
 		config.replicationMysql.password = "maxwell";
+		config.replicationMysql.jdbcOptions.add("useSSL=false");
 
 		config.maxwellMysql.host = "127.0.0.1";
 		config.maxwellMysql.port = port;
 		config.maxwellMysql.user = "maxwell";
 		config.maxwellMysql.password = "maxwell";
+		config.maxwellMysql.jdbcOptions.add("useSSL=false");
 
 		config.databaseName = "maxwell";
 
@@ -137,6 +139,7 @@ public class MaxwellTestSupport {
 		config.maxwellMysql.password = "maxwell";
 		config.maxwellMysql.host = "localhost";
 		config.maxwellMysql.port = mysql.getPort();
+		config.maxwellMysql.jdbcOptions.add("useSSL=false");
 		config.replicationMysql = config.maxwellMysql;
 
 		if ( filter != null ) {
