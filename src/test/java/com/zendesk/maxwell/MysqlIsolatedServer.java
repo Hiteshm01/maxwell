@@ -42,9 +42,10 @@ public class MysqlIsolatedServer {
 				"--log-slave-updates",
 				"--log-bin=master",
 				"--binlog_format=row",
-				"--innodb_flush_log_at_trx_commit=1",
+				"--innodb_flush_log_at_trx_commit=0",
 				serverID,
 				"--character-set-server=utf8",
+				"--sync_binlog=0",
 				"--verbose",
 				xtraParams
 		);
